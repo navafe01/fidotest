@@ -1,0 +1,23 @@
+
+name: Deploy ARM Templateon:
+  push:
+    branches:
+    - master
+  env:
+    AZURE_SUBSCRIPTION_ID: bfad48fd-f1ee-4746-8ec1-d0b591c4dd4c # set this to your Azure Subscription Id
+    AZURE_RESOURCE_GROUP: backoffice-sandbox-eastus2-sandbox-fido-dev-rg # set this to your target resource groupjobs:
+  deploy-virtual-network-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+      uses: actions/checkout@master - name: Login to Azure
+      uses: azure/login@v1
+    with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }} - name: Deploy ARM Template
+      uses: azure/arm-deploy@v1
+    with:
+      scope: resourcegroup
+      subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+      resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+      template: ./path-to/azuredeploy.json
+
