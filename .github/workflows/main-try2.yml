@@ -20,16 +20,16 @@ jobs:
     runs-on: self-hosted
     steps:
     
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    #- name: Azure Login
+    #  uses: azure/login@v1
+    #  with:
+    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
     
     - name: Azure CLI script
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.72
-        inlineScript: |
+        inlineScript: az login -u navafe01@risk.regn.net -p ${{ secrets.USER_PASSWORD }} |
           az group create --location eastus2 --name fido-test-rg 
           
         
